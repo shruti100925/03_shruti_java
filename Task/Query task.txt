@@ -1,0 +1,39 @@
+1. Display FirstName According to Ascending order
+  
+  ans: SELECT * FROM employee ORDER BY FIRST_NAMR ASC;
+
+2. Display User Detail According to Lower to Higher Salary
+
+  ans:SELECT * FROM employee ORDER BY SALARY ASC 
+
+3. Display Firstname Whose Firstname Starts with J.
+
+  ANS: SELECT * FROM employee WHERE FIRST_NAMR LIKE 'J%';
+
+4. Display All Employee Whose Designation is CLERK
+
+  ANS: SELECT * FROM employee WHERE DESIGNATION LIKE 'CLERK';
+
+5. Remove Records which is belong from HR ANALYST category
+
+  ANS: DELETE FROM employee WHERE DESIGNATION= 'HR ANALYST'
+
+6. Display User Detail Whose Department No. is 40
+
+   ANS: SELECT * FROM employee WHERE DEPTNO=40
+
+7. Display Max salary from Table
+
+   ANS:SELECT MAX(SALARY) FROM employee
+
+8. Display Minimum Salary from Table
+
+   ANS:SELECT MIN(SALARY) FROM employee
+
+9. Display Total Salary of Employee
+
+   ANS:SELECT SUM(SALARY) FROM employee
+
+10.Find Second Highest Salary From Table
+
+   ANS:SELECT FIRST_NAMR, salary FROM employee WHERE salary < (SELECT MAX(salary) FROM employee) ORDER BY salary DESC LIMIT 1;
