@@ -1,6 +1,6 @@
 package com.assignment;
 
-public class Trycatch_vote_38
+public class Trycatch_vote_41
 {
 	
 		
