@@ -1,0 +1,106 @@
+ 
+i. Select unique job from EMP table. 
+==> SELECT DISTINCT job FROM `emptable`
+
+ii. List the details of the emps in asc order of the Dptnos and desc of Jobs? 
+==> select deptno from emptable order by deptno asc
+
+iii. Display all the unique job groups in the descending order? 
+==> SELECT DISTINCT job FROM emptable ORDER BY job DESC
+
+iv. List the emps who joined before 1981. 
+==> SELECT * FROM emptable WHERE hiredate<('1981-01-01');
+
+v. List the Empno, Ename, Sal, Daily sal of all emps in the asc order of Annsal. 
+==> select empno ,ename ,sal,sal/30,12*sal annsal from emptable order by annsal asc;
+
+vi. List the Empno, Ename, Sal, Exp of all emps working for Mgr 7369.
+==> SELECT Empno, Empname, Sal FROM `emp table` WHERE Mgr = 7369;
+
+vii. Display all the details of the emps who’s Comm. Is more than their Sal? 
+==> SELECT * FROM emptable WHERE comm>sal;
+
+viii. List the emps who are either ‘CLERK’ or ‘ANALYST’ in the Desc order. 
+==> select * from emptable where job = 'Clerk'OR job = 'Analyst' order by job desc;
+
+ix. List the emps Who Annual sal ranging from 22000 and 45000. 
+==> select * from emptable where 12*sal between 22000 and 45000;
+
+x. List the Enames those are starting with ‘S’ and with five characters. 
+==> SELECT ename  FROM emptable WHERE ename LIKE 'S%' AND length (ename) = 5;
+
+xi. List the emps whose Empno not starting with digit78. 
+==> SELECT * FROM emptable WHERE empno LIKE '78%'
+
+xii. List all the Clerks of Deptno 20. 
+==> SELECT * FROM emptable WHERE deptno LIKE '20%' AND job = 'Clerk';
+
+xiii. List the Emps who are senior to their own MGRS. 
+==> select * from emptable w,emptable m where w.mgr = m.empno  and w.hiredate <  m.hiredate ;
+
+xiv. List the Emps of Deptno 20 who’s Jobs are same as Deptno10. 
+==> select * from emptable e ,emptable d where d.deptno = 20 and e.deptno = 10 and e.job=d.job in ( select e.job from emptable e,emptable d where e.deptno = 20 and d.deptno =10 and e.job=d.job);
+
+xv. List the Emps who’s Sal is same as FORD or SMITH in desc order of Sal. 
+==>Select *  from  emptable where sal in (select sal from emptable where ( ename = 'Smith' or  ename = 'Ford' ))  order by sal desc;
+
+xvi. List the emps whose jobs same as SMITH or ALLEN. 
+==> Select *  from  emptable where job in (select job from emptable where ( ename = 'Smith' or  ename = 'Allen' ))  order by job desc;
+
+xvii. Any jobs of deptno 10 those that are not found in deptno 20. 
+==> select  e.job from emptable e where e.deptno = 10 and e.job not in (select job from emptable where deptno =20);
+
+xviii. Find the highest sal of EMP table. 
+==>  SELECT MAX(sal) FROM emptable;
+
+xix. Find details of highest paid employee. 
+==> SELECT * FROM emptable WHERE sal in(SELECT MAX(sal) FROM emptable)
+
+xx. Find the total sal given to the MGR. 
+==> SELECT SUM(sal) FROM emptable WHERE job='Manager';
+
+xxi. List the emps whose names contains ‘A’. 
+==> SELECT * FROM emptable WHERE ename LIKE '%A%';
+
+xxii. Find all the emps who earn the minimum Salary for each job wise in ascending order.
+==> SELECT *FROM emptable WHERE sal IN(SELECT min(sal) FROM emptable GROUP BY job)ORDER BY sal ASC;
+
+xxiii. List the emps whose sal greater than Blake’s sal. 
+==> SELECT * FROM emptable WHERE sal> (SELECT sal FROM emptable WHERE ename='Blake');
+
+xxiv. Create view v1 to select ename, job, dname, loc whose deptno are same.
+==> CREATE VIEW v1 AS SELECT e.ename, e.job, d.dname, d.loc FROM emptable e JOIN depttable d ON e.deptno = d.deptno;
+
+==>CREATE VIEW v2 AS SELECT e.ename, e.job, d.dname, d.loc FROM emptable e JOIN depttable d ON e.deptno = e.deptno;
+
+xxv. Create a procedure with dno as input parameter to fetch ename and dname. 
+==>:DELIMITER // 
+CREATE PROCEDURE fetchname(IN deptno INT) 
+BEGIN SELECT e.ename, d.dname FROM emptable e JOIN depttable d ON e.deptno = d.deptno WHERE d.deptno = deptno;
+END // 
+DELIMITER ;
+CALL fetchname(10)
+
+
+xxvi. Add column Pin with bigint data type in table student. 
+==>ALTER TABLE studenttable
+ADD COLUMN Pin BIGINT NULL;
+
+xxvii. Modify the student table to change the sname length from 14 to 40. 
+==> ALTER TABLE studenttable MODIFY COLUMN Sname varchar(40);
+
+xxviii:Create trigger to insert data in emp_log table whenever any update of sal in EMP table. You can set action as ‘New Salary’.
+==>
+DELIMITER 
+$$
+CREATE TRIGGER NewSalary
+AFTER UPDATE ON e.emptable
+FOR EACH ROW
+BEGIN
+INSERT INTO emplogtable(empid,logdate,newsalary,action)
+VALUES(e.empno,e.hiredate,e.sal,'')
+END
+$$
+
+
+DELIMITER ;
