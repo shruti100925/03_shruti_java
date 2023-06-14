@@ -20,24 +20,15 @@
     
 
 	out.print("Your Firstname:"+name);
-	%><br>
-	<%
-	out.print("Your Lastname:"+fname);
-	%>
-	<br>
-	<%
-	out.print("Your Email id:"+email);
-	%>
-	<br>
-	<%
-	out.print("Your Mobile no:"+mobile);
-	%>
-	<br>
-	<%
-	out.print("Your Gender:"+gender);
-	%>
-	<br>
-	<%
+	
+	out.print("<br>Your Lastname:"+fname);
+	
+	out.print("<br>Your Email id:"+email);
+	
+	out.print("<br>Your Mobile no:"+mobile);
+	
+	out.print("<br>Your Gender:"+gender);
+	
 	out.print("Your Password:"+pass);
 	%>
 	
